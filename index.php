@@ -44,6 +44,10 @@ if ($acao === 'login' && $metodo === 'POST') {
     header('Location: index.php');
     exit;
 
+} elseif ($acao === 'cadastrar_post') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    controller_cadastrarPost();
+
 } else {
     require __DIR__ . '/view/login.php';
 }
