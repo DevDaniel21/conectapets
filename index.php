@@ -14,14 +14,17 @@ if ($acao === 'login' && $metodo === 'POST') {
     // Manda para pagina de cadastro
 
 } elseif ($acao === 'salvar_cadastro') {
-    $nome = $_POST['nome'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $senha = $_POST['senha'] ?? '';
-    $telefone = $_POST['telefone'] ?? 0;
-    
     require_once __DIR__ . '/controller/userController.php';
-    controller_cadastrar($nome, $email, $senha, $telefone);
+    controller_cadastrar();
     //Registra usuario e redireciona para home
+
+} elseif ($acao === 'perfil') {
+    require __DIR__ . '/view/perfil.php';
+
+} elseif ($acao === 'atualizar_perfil') {
+    require __DIR__ . '/controller/userController.php';
+    controller_atualizarPerfil();
+    // Atualiza o usuario e volta para o perfil
 
 } elseif ($acao === 'home') {
     require __DIR__ . '/view/home.php';

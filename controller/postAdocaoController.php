@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../model/postAdocaoModel.php';
+require_once __DIR__ . '/../model/userModel.php';
 require_once __DIR__ . '/../config/session.php';
 require_once __DIR__ . '/cloudinaryController.php';
 

@@ -28,9 +28,10 @@ function listarPostsAdocao()
 {
     global $pdo;
 
-    $sql = "SELECT id, usuario_id, nome, especie, idade, sexo, foto, status, data_publicacao
-            FROM post_adocao
-            ORDER BY data_publicacao DESC";
+    $sql = "SELECT p.*, u.nome AS usuario_nome
+            FROM post_adocao p
+            LEFT JOIN usuario u ON p.usuario_id = u.id
+            ORDER BY p.data_publicacao DESC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -59,10 +60,14 @@ function buscarPostPorId($id)
 {
     global $pdo;
 
-    $sql = "SELECT id, usuario_id, nome, especie, idade, sexo, foto, status, data_publicacao
-            FROM post_adocao
-            WHERE id = :id";
-
+    $sql = "SELECT
+            p.*, 
+            u.nome AS usuario_nome, 
+            u.telefone AS usuario_telefone
+        FROM post_adocao p
+        LEFT JOIN usuario u ON p.usuario_id = u.id
+        WHERE p.id = :id";
+    
     $stmt = $pdo->prepare($sql);
     $stmt->execute([":id" => $id]);
 
