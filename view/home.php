@@ -30,14 +30,14 @@
     $config = new Configuration($_ENV['CLOUDINARY_URL']);
     $cld = new Cloudinary($config);
 
-    // Get posts
-    $posts = controller_listarPosts();
+    // Get posts (apenas os que ainda não foram adotados)
+    $posts = controller_listarPostsDisponiveis();
     $post_modal = null;
 
     // Verifica se tem post_adocao_id para abrir modal
     $post_adocao_id = $_GET['post_adocao_id'] ?? null;
     if ($post_adocao_id) {
-        $post_modal = buscarPostPorId($post_adocao_id);
+        $post_modal = controller_buscarPostPorId($post_adocao_id);
     }
 
     ?>
@@ -59,7 +59,7 @@
                         </li>
                         <?php if (isset($_SESSION['usuario']['nome'])): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Suas doações</a>
+                                <a class="nav-link" href="index.php?acao=minhas_doacoes">Suas doações</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?acao=perfil">Perfil</a>
@@ -116,10 +116,12 @@
                                 <h5 class="mb-0 text-dark"><?= htmlspecialchars($post['nome']) ?></h5>
 
                                 <div class="d-flex align-items-center gap-3">
-                                    <?php if ($post['sexo'] == 'Macho'): ?>
-                                        <i class="bi bi-gender-male text-primary fs-4"></i>
+                                    <?php if ($post['sexo'] === 'Macho'): ?>
+                                        <i class="bi bi-gender-male text-primary fs-4" title="Macho"></i>
+                                    <?php elseif ($post['sexo'] === 'Fêmea'): ?>
+                                        <i class="bi bi-gender-female text-danger fs-4" title="Fêmea"></i>
                                     <?php else: ?>
-                                        <i class="bi bi-gender-female text-danger fs-4"></i>
+                                        <i class="bi bi-gender text-secondary fs-4" title="Sexo não definido"></i>
                                     <?php endif; ?>
                                 </div>
 
@@ -163,10 +165,12 @@
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h5 class="mb-0 text-dark fw-semibold"><?= htmlspecialchars($post_modal['nome']) ?></h5>
 
-                                <?php if ($post_modal['sexo'] == 'Macho'): ?>
+                                <?php if ($post_modal['sexo'] === 'Macho'): ?>
                                     <i class="bi bi-gender-male text-primary fs-4" title="Macho"></i>
-                                <?php else: ?>
+                                <?php elseif ($post_modal['sexo'] === 'Fêmea'): ?>
                                     <i class="bi bi-gender-female text-danger fs-4" title="Fêmea"></i>
+                                <?php else: ?>
+                                    <i class="bi bi-gender text-secondary fs-4" title="Sexo não definido"></i>
                                 <?php endif; ?>
                             </div>
 

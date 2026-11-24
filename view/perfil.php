@@ -185,7 +185,9 @@ unset($_SESSION['perfil_sucesso'], $_SESSION['perfil_erro']);
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="index.php?acao=excluir_conta"><button type="button" class="btn btn-danger">Excluir</button></a>
+                        <form action="index.php?acao=excluir_conta" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
                     </div>
                 </div>
             </div>

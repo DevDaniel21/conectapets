@@ -40,6 +40,23 @@ function listarPostsAdocao()
 }
 
 
+function listarPostsDisponiveis()
+{
+    global $pdo;
+
+    $sql = "SELECT p.*, u.nome AS usuario_nome
+            FROM post_adocao p
+            LEFT JOIN usuario u ON p.usuario_id = u.id
+            WHERE p.status <> 'Adotado'
+            ORDER BY p.data_publicacao DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 function listarPostsPorUsuario($usuario_id)
 {
     global $pdo;

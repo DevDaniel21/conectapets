@@ -36,20 +36,33 @@ if ($acao === 'login' && $metodo === 'POST') {
     exit;
 
 } elseif ($acao === 'excluir_conta') {
-    require_once __DIR__ . '/config/session.php';
-    require_once __DIR__ . '/model/userModel.php';
+    require_once __DIR__ . '/controller/userController.php';
+    controller_excluirConta();
+    // O controller encerra a sessão e redireciona
 
-    if (isset($_SESSION['usuario']['id'])) {
-        excluirUsuario($_SESSION['usuario']['id']);
-    }
+} elseif ($acao === 'listar_posts_usuario') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    controller_listarPostsUsuario();
 
-    session_destroy();
-    header('Location: index.php');
-    exit;
+} elseif ($acao === 'atualizar_post') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    controller_atualizarPost();
+
+} elseif ($acao === 'excluir_post') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    controller_excluirPost();
 
 } elseif ($acao === 'cadastrar_post') {
     require_once __DIR__ . '/controller/postAdocaoController.php';
     controller_cadastrarPost();
+
+} elseif ($acao === 'minhas_doacoes') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    require __DIR__ . '/view/minhas_doacoes.php';
+
+} elseif ($acao === 'editar_post') {
+    require_once __DIR__ . '/controller/postAdocaoController.php';
+    controller_editarPost();
 
 } else {
     require __DIR__ . '/view/login.php';

@@ -1,7 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../model/userModel.php';
+require_once __DIR__ . '/../model/postAdocaoModel.php';
 require_once __DIR__ . '/../config/session.php';
+require_once __DIR__ . '/cloudinaryController.php';
 
 function controller_cadastrar()
 {
@@ -67,7 +69,17 @@ function controller_excluirConta()
         exit;
     }
 
-    $resultado = excluirUsuario($_SESSION['usuario']['id']);
+    $usuario_id = $_SESSION['usuario']['id'];
+
+    // Exclui as fotos dos posts do usuário no Cloudinary (apenas as imagens)
+    $posts = listarPostsPorUsuario($usuario_id);
+    foreach ($posts as $post) {
+        if (!empty($post['foto'])) {
+            deletarImagem($post['foto']);
+        }
+    }
+
+    $resultado = excluirUsuario($usuario_id);
 
     if ($resultado) {
         $_SESSION = [];

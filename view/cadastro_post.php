@@ -16,6 +16,7 @@
                     <h2 class="fw-bold text-primary">Criar uma nova doação</h2>
                 </div>
                 <form action="index.php?acao=cadastrar_post" enctype="multipart/form-data" method="POST" class="was-validated">
+                    <input type="hidden" name="cadastro_post_token" value="<?= htmlspecialchars($_SESSION['cadastro_post_token'] ?? '') ?>">
                     <!-- NOME -->
                     <div class="mb-3">
                         <label class="form-label fw-semibold" for="nome">
